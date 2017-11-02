@@ -1,0 +1,87 @@
+﻿@model IEnumerable<Domain.Model.Business>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink(" ", "Create", new { }, new { @class = "glyphicon glyphicon-plus btn btn-info" })
+</p>
+<p>
+    @Html.ActionLink(" ", "Index","Home", new { }, new { @class = "glyphicon glyphicon-home btn btn-primary" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TypeBusiness.Type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Image)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RNC)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneBusiness)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Latitude)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Lengthe)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.OrderBy(b=>b.Name)) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TypeBusiness.Type)
+        </td>
+        <td>
+            @if (!string.IsNullOrEmpty(item.Image))
+            {
+                <img src="@Url.Content(item.Image)" alt="Image" style="width:150px;height:150px;max-height:100px;max-width:100px"/>
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RNC)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PhoneBusiness)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Latitude)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Lengthe)
+        </td>
+        <td>
+            <p>
+                @Html.ActionLink(" ", "Edit", new { id = item.BusinessId }, new { @class = "glyphicon glyphicon-wrench btn btn-default" })
+            </p>
+            <p>
+                @Html.ActionLink(" ", "Details", new { id = item.BusinessId }, new { @class = "glyphicon glyphicon-eye-open btn btn-warning" })
+            </p>
+            <p>
+                @Html.ActionLink(" ", "Delete", new { id = item.BusinessId }, new { @class = "glyphicon glyphicon-trash btn btn-danger" })
+            </p>
+        </td>
+    </tr>
+}
+
+</table>

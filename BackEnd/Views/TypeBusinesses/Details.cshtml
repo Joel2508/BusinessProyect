@@ -1,0 +1,26 @@
+﻿@model Domain.Model.TypeBusiness
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TypeBusiness</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink(" ", "Edit", new { id = Model.TypeBusinessId }, new { @class = "glyphicon glyphicon-wrench btn btn-default" })
+    @Html.ActionLink(" ", "Index", new { }, new { @class = "glyphicon glyphicon-arrow-left btn btn-primary" })
+</p>

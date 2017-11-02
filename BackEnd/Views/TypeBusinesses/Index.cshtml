@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Domain.Model.TypeBusiness>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+
+<p>
+    @Html.ActionLink(" ", "Create", new { }, new { @class = "glyphicon glyphicon-plus btn btn-info" })
+</p>
+<p>
+    @Html.ActionLink(" ", "Index", "Home", new { }, new { @class = "glyphicon glyphicon-home btn btn-primary" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Type)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.OrderBy(t=>t.Type)) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Type)
+        </td>
+        <td>
+            @Html.ActionLink(" ", "Edit", new { id = item.TypeBusinessId }, new { @class = "glyphicon glyphicon-wrench btn btn-default" })
+            @Html.ActionLink(" ", "Details", new { id = item.TypeBusinessId }, new { @class = "glyphicon glyphicon-eye-open btn btn-warning" })
+            @Html.ActionLink(" ", "Delete", new { id = item.TypeBusinessId }, new { @class = "glyphicon glyphicon-trash btn btn-danger" })
+        </td>
+    </tr>
+}
+
+</table>
