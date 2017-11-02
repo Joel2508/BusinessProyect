@@ -1,6 +1,7 @@
 ﻿
 namespace Domain.Model
 {
+    using Newtonsoft.Json;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
@@ -13,6 +14,7 @@ namespace Domain.Model
         [Required(ErrorMessage ="This filed is required")]
         public string Type { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<Business> Business { get; set; }
     }
 }

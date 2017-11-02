@@ -10,8 +10,8 @@ namespace Domain.Context
 
         }
 
-        public System.Data.Entity.DbSet<Domain.Model.TypeBusiness> TypeBusinesses { get; set; }
+        public DbSet<Model.TypeBusiness> TypeBusinesses { get; set; }
 
-        public System.Data.Entity.DbSet<Domain.Model.Business> Businesses { get; set; }
+        public DbSet<Model.Business> Businesses { get; set; }
     }
 }

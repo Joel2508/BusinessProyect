@@ -1,5 +1,6 @@
 ﻿namespace Domain.Model
 {
+    using Newtonsoft.Json;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
@@ -43,6 +44,7 @@
         [MaxLength(20, ErrorMessage = "The filed {0} you must enter maximum in character is")]
         public string Lengthe { get; set; }
 
+        [JsonIgnore]
         public virtual TypeBusiness TypeBusiness { get; set; }
     }
 }
