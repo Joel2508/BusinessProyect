@@ -8,11 +8,31 @@ namespace BusinessProyect.ViewModel
 {
     public class MainViewModel
     {
-        public TyperBusinessViewModel TyperBusiness { get; set; }
 
+        #region Properties
+        public TyperBusinessViewModel TyperBusines { get; set; }
+        public BusinesssViewModel Businesss { get; set; }
+        #endregion
+
+        #region Constructor
         public MainViewModel()
         {
-            TyperBusiness = new TyperBusinessViewModel();
+            instance = this;
+            TyperBusines = new TyperBusinessViewModel();
         }
+        #endregion
+
+        #region Singleton
+        private static MainViewModel instance;
+        public static MainViewModel GetInstance()
+        {
+            if (instance == null)
+            {
+                instance = new MainViewModel();
+            }
+            return instance;
+        }
+        #endregion
+
     }
 }

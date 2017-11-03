@@ -3,9 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BusinessProyect.Pages.TyperBusinessPage"
              BindingContext="{Binding Main, Source={StaticResource Locator}}">
+
     <ContentPage.Content>
         <StackLayout
-        BindingContext="{Binding TyperBusiness}"
+        BindingContext="{Binding TyperBusines}"
         Orientation="Horizontal"
         Padding="5">
             <ListView
@@ -13,38 +14,27 @@
             IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"            
             IsPullToRefreshEnabled="True"
             RefreshCommand="{Binding RefreshCommand}"            
-            ItemsSource="{Binding Categories}">
+            ItemsSource="{Binding TyperBusiness}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <ViewCell.ContextActions>
-                                <MenuItem
-                                Command="{Binding EditCommad}"
-                                Text="Edit">
-                                </MenuItem>
-                                <MenuItem
-                                Command="{Binding DeleteCommand}"
-                                IsDestructive="True"
-                                Text="Delete">
-                                </MenuItem>
-                            </ViewCell.ContextActions>
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <Label
-                                Grid.Column="0"
-                                FontSize="Large"        
-                                FontAttributes="Bold"
-                                HorizontalOptions="FillAndExpand"         
-                                Text="{Binding Description}">
+                                    Grid.Column="0"
+                                    FontSize="Large"        
+                                    FontAttributes="Bold"
+                                    HorizontalOptions="FillAndExpand"         
+                                    Text="{Binding Type}">
                                 </Label>
                                 <Image                           
                                 HorizontalOptions="End"
-                                Source="ic_chevron_right.png">
+                                Source="ic_action_chevron_right.png">
                                     <Image.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding SelectCategoryCommand}"/>
+                                        <TapGestureRecognizer Command="{Binding SelectBusinessCommand}"/>
                                     </Image.GestureRecognizers>
                                 </Image>
                             </Grid>
