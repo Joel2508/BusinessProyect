@@ -12,13 +12,14 @@ namespace BusinessProyect.ViewModel
         #region Properties
         public TyperBusinessViewModel TyperBusines { get; set; }
         public BusinesssViewModel Businesss { get; set; }
+        public LoginViewModel Login { get; set; }
         #endregion
 
         #region Constructor
         public MainViewModel()
         {
             instance = this;
-            TyperBusines = new TyperBusinessViewModel();
+            Login = new LoginViewModel();
         }
         #endregion
 

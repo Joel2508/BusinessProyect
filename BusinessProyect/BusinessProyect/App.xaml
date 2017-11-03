@@ -9,6 +9,9 @@
         <ResourceDictionary>
             <!--Locator-->
             <infra:IntanceLocator x:Key="Locator"/>
+            <Color x:Key="MainColor">#FFFFFF</Color>
+            <Color x:Key="FontColor">#9CA64F</Color>
+            <Color x:Key="AccentColor1">#3E1B3C</Color>
         </ResourceDictionary>
 
     </Application.Resources>

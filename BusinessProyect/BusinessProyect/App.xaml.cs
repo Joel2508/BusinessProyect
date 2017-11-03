@@ -14,7 +14,7 @@ namespace BusinessProyect
         {
             InitializeComponent();
 
-            MainPage = new TyperBusinessPage();
+            MainPage = new NavigationPage(new LoginPage());
         }
 
         protected override void OnStart()
