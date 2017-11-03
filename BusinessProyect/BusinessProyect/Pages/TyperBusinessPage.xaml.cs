@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Xamarin.Forms;
 
-namespace BusinessProyect
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
+
+namespace BusinessProyect.Pages
 {
-    public partial class MainPage : ContentPage
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class TyperBusinessPage : ContentPage
     {
-        public MainPage()
+        public TyperBusinessPage()
         {
             InitializeComponent();
         }

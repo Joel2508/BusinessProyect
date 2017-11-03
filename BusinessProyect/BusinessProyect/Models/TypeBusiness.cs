@@ -1,15 +1,12 @@
 ﻿
-namespace API.Respons
+namespace BusinessProyect.Models
 {
-    using Domain.Model;
     using System.Collections.Generic;
 
-    public class TypeResponse
+    public class TypeBusiness
     {
         public int TypeBusinessId { get; set; }
-
         public string Type { get; set; }
-
-        public List<BusinesResponse> Businesss { get; set; }
+        public List<Businesss> Businesss { get; set; }
     }
 }

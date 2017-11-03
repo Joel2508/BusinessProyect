@@ -3,6 +3,7 @@
     using Newtonsoft.Json;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System;
 
     public class Business
     {
@@ -45,6 +46,6 @@
         public string Lengthe { get; set; }
 
         [JsonIgnore]
-        public virtual TypeBusiness TypeBusiness { get; set; }
+        public virtual TypeBusiness TypeBusiness { get; set; }            
     }
 }

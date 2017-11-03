@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessProyect.Pages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,7 @@ namespace BusinessProyect
         {
             InitializeComponent();
 
-            MainPage = new BusinessProyect.MainPage();
+            MainPage = new TyperBusinessPage();
         }
 
         protected override void OnStart()

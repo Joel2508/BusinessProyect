@@ -18,6 +18,8 @@ namespace API.Controllers
     public class TypeBusinessesController : ApiController
     {
         private ContextDomain db = new ContextDomain();
+       
+
 
         // GET: api/TypeBusinesses
         public async Task<IHttpActionResult> GetTypeBusinesses()
@@ -28,33 +30,36 @@ namespace API.Controllers
 
             foreach (var typeBusinesse in typeBusinesses)
             {
-                var businessResponse = new List<BusinesResponse>();
+                var businessResponses = new List<BusinesResponse>();
 
-                foreach (var list in typeBusinesse.Business)
+                foreach (var item in typeBusinesse.Business)
                 {
-                    businessResponse.Add(new BusinesResponse
+                    businessResponses.Add(new BusinesResponse
                     {
-                        BusinessId = list.BusinessId,
-                        Email = list.Email,
-                        Image = list.Image,
-                        Latitude = list.Latitude,
-                        Lengthe = list.Lengthe,
-                        Name = list.Name,
-                        PhoneBusiness = list.PhoneBusiness,
-                        RNC = list.RNC,
-                        TypeBusinessId = list.TypeBusinessId,
-                    });
-                    typeResponse.Add(new TypeResponse
-                    {
-                        Type = typeBusinesse.Type,
-                        TypeBusinessId = typeBusinesse.TypeBusinessId,                       
+                        BusinessId = item.BusinessId,
+                        Email = item.Email,
+                        Image = item.Image,
+                        Latitude = item.Latitude,
+                        Lengthe = item.Lengthe,
+                        Name = item.Name,
+                        PhoneBusiness = item.PhoneBusiness,
+                        RNC = item.RNC,
+                        TypeBusinessId = item.TypeBusinessId,
+
                     });
                 }
-               
-            }
-            return Ok(typeResponse);       
-        }
 
+
+                typeResponse.Add(new TypeResponse
+                {
+                    Businesss = businessResponses,
+                    Type = typeBusinesse.Type,
+                    TypeBusinessId = typeBusinesse.TypeBusinessId,
+                });
+            }
+            return Ok(typeResponse);
+
+        }
 
 
         // GET: api/TypeBusinesses/5
