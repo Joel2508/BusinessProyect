@@ -11,7 +11,7 @@
                 Spacing="5"
                 BindingContext="{Binding Login}">
             <Image
-                HorizontalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand"                                
                 VerticalOptions="FillAndExpand"
                 Source="ic_launcher.png"
                 AbsoluteLayout.LayoutBounds="1, 0 ,0.2, 0.3"
@@ -56,11 +56,12 @@
                 </Entry>
             </Grid>
             <ActivityIndicator
-                IsRunning="{Binding IsRunning}"
+                IsRunning="{Binding IsRunning, Mode=TwoWay}"
                 Color="Navy">
             </ActivityIndicator>
             <Button
                 Text="Accept"
+                IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
                 TextColor="BlueViolet"
                 BackgroundColor="Black"
                 Command="{Binding LoginCommand}"

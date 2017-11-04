@@ -12,6 +12,9 @@ namespace BusinessProyect.Service
 {
     public class ApiService
     {
+        #region Methods
+
+        #region Method the connection
         public async Task<Responses> CheckConnection()
         {
             if (!CrossConnectivity.Current.IsConnected)
@@ -40,12 +43,38 @@ namespace BusinessProyect.Service
                 Message = "OK",
             };
         }
+        #endregion
 
+        #region Method the reponse token
+        public async Task<TokenResponse> GetToken(string urlBase, string userName, string password)
+        {
+            try
+            {
+                var client = new HttpClient();
+                client.BaseAddress = new Uri(urlBase);
+                var response = await client.PostAsync("Token",
+                    new StringContent(string.Format(
+                   "grant_type=password&username={0}&password={1}", userName, password),
+                    Encoding.UTF8, "application/x-www-form-urlencoded"));
+                var resulJson = await response.Content.ReadAsStringAsync();
+                var resutl = JsonConvert.DeserializeObject<TokenResponse>(resulJson);
+
+                return resutl;
+            }
+            catch
+            {
+                return null;
+            }
+
+        }
+        #endregion
+
+        #region Method the get generic
         public async Task<Responses> Get<T>(string urlBase, string servicePrefix, string controller)
         {
             try
             {
-                var client = new HttpClient();             
+                var client = new HttpClient();
                 client.BaseAddress = new Uri(urlBase);
                 var url = string.Format("{0}{1}", servicePrefix, controller);
                 var response = await client.GetAsync(url);
@@ -76,5 +105,8 @@ namespace BusinessProyect.Service
                 };
             }
         }
+        #endregion
+
+        #endregion
     }
 }

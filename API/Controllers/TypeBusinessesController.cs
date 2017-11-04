@@ -13,8 +13,10 @@ using Domain.Model;
 using API.Respons;
 using System.Collections.Generic;
 
+
 namespace API.Controllers
 {
+    [Authorize]
     public class TypeBusinessesController : ApiController
     {
         private ContextDomain db = new ContextDomain();
