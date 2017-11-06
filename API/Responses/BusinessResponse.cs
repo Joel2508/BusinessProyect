@@ -1,14 +1,8 @@
-﻿
-namespace API.Respons
+﻿namespace API.Responses
 {
-    using Domain.Model;
-    using System.Collections.Generic;
-
-    public class BusinesResponse
+    public class BusinessResponse
     {
         public int BusinessId { get; set; }
-
-        public int TypeBusinessId { get; set; }
 
         public string Image { get; set; }
 

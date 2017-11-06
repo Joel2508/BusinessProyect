@@ -1,5 +1,7 @@
-﻿using BusinessProyect.Service;
+﻿using BusinessProyect.Pages;
+using BusinessProyect.Service;
 using GalaSoft.MvvmLight.Command;
+using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace BusinessProyect.ViewModel
 {
@@ -15,6 +18,9 @@ namespace BusinessProyect.ViewModel
         #region Attribute
         private bool isRunning;
         private bool isEnabled;
+        private bool isToggled;
+        private string email;
+        private string password;
         #endregion
 
         #region Service
@@ -36,7 +42,7 @@ namespace BusinessProyect.ViewModel
             }
             set
             {
-                if(isRunning != value)
+                if (isRunning != value)
                 {
                     isRunning = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsRunning)));
@@ -59,11 +65,54 @@ namespace BusinessProyect.ViewModel
                 }
             }
         }
-        public string Email { get; set; }
-        public string Password { get; set; }
+
+        public bool IsToggled
+        {
+            get
+            {
+                return isToggled;
+            }
+            set
+            {
+                if (isToggled != value)
+                {
+                    isToggled = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsToggled)));
+                }
+            }
+        }
+        public string Email
+        {
+            get
+            {
+                return email;
+            }
+            set
+            {
+                if (email != value)
+                {
+                    email = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Email)));
+                }
+            }
+        }
+        public string Password
+        {
+            get
+            {
+                return password;
+            }
+            set
+            {
+                if (password != value)
+                {
+                    password = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Password)));
+                }
+            }
+        }
 
         #endregion
-
 
         #region Constructor
         public LoginViewModel()
@@ -71,35 +120,79 @@ namespace BusinessProyect.ViewModel
             navigationService = new NavigationService();
             dialogService = new DialogService();
             apiService = new ApiService();
-
+            Email = "joelarias2508@gmail.com";
+            Password = "123456";
+            IsEnabled = true;
+            IsToggled = true;
         }
         #endregion
 
-        public ICommand LoginCommand { get {return new RelayCommand(Login); } }
+        public ICommand LoginCommand { get { return new RelayCommand(Login); } }
 
         private async void Login()
         {
-           var internet = await apiService.CheckConnection();
-            if (!internet.IsSuccess)
+
+            if (string.IsNullOrEmpty(Email))
             {
-                await dialogService.ShowsMessage("Error", "Not connection the internet");
+                await dialogService.ShowsMessage("Error", "You must enter a email");
                 return;
             }
 
-            if (!string.IsNullOrEmpty(Email))
+            if (string.IsNullOrEmpty(Password))
             {
-                await dialogService.ShowsMessage("Error", "Enter your must a email");
+                await dialogService.ShowsMessage("Error", "You must enter a password");
                 return;
             }
 
-            if (!string.IsNullOrEmpty(Password))
+            IsRunning = true;
+            IsEnabled = false;
+
+            var connection = await apiService.CheckConnection();
+
+            if (!connection.IsSuccess)
             {
-                await dialogService.ShowsMessage("Error", "Enter your must a password");
+                IsRunning = false;
+                IsEnabled = true;
+                await dialogService.ShowsMessage("Error", connection.Message);
                 return;
             }
 
-            var response = await apiService.GetToken("http://www.xtudia.somee.com","/api","");
 
+            var response = await apiService.GetToken("http://www.xtudia.somee.com",
+                Email, Password);
+
+            if (response == null)
+            {
+                IsEnabled = true;
+                IsRunning = false;
+                await dialogService.ShowsMessage("Error", "Not service the internet");
+                Email = null;
+                Password = null;
+                return;
+            }
+
+            if (string.IsNullOrEmpty(response.AccessToken))
+            {
+                IsEnabled = true;
+                IsRunning = false;
+                await dialogService.ShowsMessage("Error", response.ErrorDescription);
+                Password = null;
+                return;
+            }
+
+            var mainViewModel = MainViewModel.GetInstance();
+            mainViewModel.Token = response;
+            mainViewModel.TyperBusines = new TyperBusinessViewModel();
+            await navigationService.Navigation("TyperBusinessPage");
+
+            Email = null;
+            Password = null;
+
+
+            IsRunning = false;
+            IsEnabled = true;
+
+            
         }
     }
 }

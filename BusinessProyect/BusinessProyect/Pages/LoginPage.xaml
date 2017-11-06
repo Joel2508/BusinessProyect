@@ -7,36 +7,42 @@
 
     <ScrollView>
         <StackLayout       
-                Padding="8"
-                Spacing="5"
-                BindingContext="{Binding Login}">
+            VerticalOptions="Center"           
+            HorizontalOptions="Center"
+            Padding="8"            
+            Spacing="17"
+            BindingContext="{Binding Login}">
             <Image
-                HorizontalOptions="FillAndExpand"                                
-                VerticalOptions="FillAndExpand"
                 Source="ic_launcher.png"
-                AbsoluteLayout.LayoutBounds="1, 0 ,0.2, 0.3"
-                AbsoluteLayout.LayoutFlags="All">
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="Center">
             </Image>
-            <Grid>
+            <Grid
+                Margin="50, 10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="2*"/>
                 </Grid.ColumnDefinitions>
                 <Label
+                    Grid.Column="0"
+                    Grid.Row="0"
+                    FontSize="Small"
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
-                    Grid.Column="0"
                     Text="Email"
                     TextColor="Black">
                 </Label>
                 <Entry
                     Grid.Column="1"
+                    Grid.Row="0" 
+                    Keyboard="Email"
                     Placeholder="Enter your email..."
                     Text="{Binding Email, Mode=TwoWay}"
                     TextColor="Black">
                 </Entry>
             </Grid>
-            <Grid>
+            <Grid
+                Margin="50, 10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="2*"/>
@@ -44,37 +50,67 @@
                 <Label
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
+                    FontSize="Small"
+                    Grid.Row="0"
                     Grid.Column="0"
                     Text="Password"
                     TextColor="Black">
                 </Label>
                 <Entry
                     Grid.Column="1"
+                    Grid.Row="0"
                     IsPassword="True"
                     Placeholder="Enter your password..."
                     Text="{Binding Password, Mode=TwoWay}">
                 </Entry>
             </Grid>
+            <StackLayout
+                HorizontalOptions="Center"
+                Orientation="Horizontal">
+                <Label
+                    VerticalOptions="Center"
+                    TextColor="Black"
+                    Text="Rememberme">
+                </Label>
+                <Switch                    
+                    IsToggled="{Binding IsToggled, Mode=TwoWay}">
+                </Switch>
+            </StackLayout>
+            <StackLayout
+                HorizontalOptions="Center"
+                Orientation="Horizontal">
+                <Label
+                    FontSize="Medium"
+                    Text="Forgot you password?"
+                    TextColor="DarkBlue">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding ForgotPasswordCommand}"/>
+                    </Label.GestureRecognizers>
+                </Label>
+            </StackLayout>
             <ActivityIndicator
                 IsRunning="{Binding IsRunning, Mode=TwoWay}"
                 Color="Navy">
             </ActivityIndicator>
             <Button
-                Text="Accept"
-                IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
-                TextColor="BlueViolet"
                 BackgroundColor="Black"
-                Command="{Binding LoginCommand}"
                 BorderRadius="23"
+                BorderWidth="23"
+                Command="{Binding LoginCommand}"
                 HeightRequest="50"
-                WidthRequest="40"
-                BorderWidth="23">
+                Margin="50, 0"
+                Text="Accept"
+                TextColor="BlueViolet"
+                IsEnabled="{Binding IsEnabled}"
+                WidthRequest="40">
             </Button>
             <Button
+                Margin="50, 0"
                 Text="Register"
                 TextColor="BlueViolet"
                 BackgroundColor="{StaticResource AccentColor1}"
-                Command="{Binding LoginCommand}"
+                Command="{Binding RegisterNewUserCommand}"
                 BorderRadius="23"
                 HeightRequest="50"
                 WidthRequest="40"
@@ -82,6 +118,4 @@
             </Button>
         </StackLayout>
     </ScrollView>
-
-    
 </ContentPage>

@@ -3,8 +3,8 @@ using Newtonsoft.Json;
 using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -46,35 +46,35 @@ namespace BusinessProyect.Service
         #endregion
 
         #region Method the reponse token
-        public async Task<TokenResponse> GetToken(string urlBase, string userName, string password)
+        public async Task<TokenResponse> GetToken(string urlBase, string username, string password)
         {
             try
             {
                 var client = new HttpClient();
                 client.BaseAddress = new Uri(urlBase);
                 var response = await client.PostAsync("Token",
-                    new StringContent(string.Format(
-                   "grant_type=password&username={0}&password={1}", userName, password),
-                    Encoding.UTF8, "application/x-www-form-urlencoded"));
-                var resulJson = await response.Content.ReadAsStringAsync();
-                var resutl = JsonConvert.DeserializeObject<TokenResponse>(resulJson);
-
-                return resutl;
+                new StringContent(string.Format("grant_type=password&username={0}&password={1}", username, password),
+                Encoding.UTF8, "application/x-www-form-urlencoded"));
+                var resultJSON = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<TokenResponse>(resultJSON);
+                return result;
             }
             catch
             {
                 return null;
             }
-
         }
         #endregion
 
         #region Method the get generic
-        public async Task<Responses> Get<T>(string urlBase, string servicePrefix, string controller)
+        public async Task<Responses> GetList<T>(string urlBase, string servicePrefix, string controller,
+            string tokenType, string accessToken)
         {
             try
             {
                 var client = new HttpClient();
+                client.DefaultRequestHeaders.Authorization = 
+                    new AuthenticationHeaderValue(tokenType, accessToken);
                 client.BaseAddress = new Uri(urlBase);
                 var url = string.Format("{0}{1}", servicePrefix, controller);
                 var response = await client.GetAsync(url);
@@ -85,7 +85,7 @@ namespace BusinessProyect.Service
                     return new Responses
                     {
                         IsSuccess = false,
-                        Message = response.StatusCode.ToString(),
+                        Message = result,
                     };
                 }
                 var list = JsonConvert.DeserializeObject<List<T>>(result);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
@@ -10,9 +11,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Domain.Context;
 using Domain.Model;
-using API.Respons;
-using System.Collections.Generic;
-
+using API.Responses;
 
 namespace API.Controllers
 {
@@ -20,55 +19,48 @@ namespace API.Controllers
     public class TypeBusinessesController : ApiController
     {
         private ContextDomain db = new ContextDomain();
-       
-
 
         // GET: api/TypeBusinesses
         public async Task<IHttpActionResult> GetTypeBusinesses()
         {
-            var typeBusinesses = await db.TypeBusinesses.ToListAsync();
+            var listTypeBusiness = await  db.TypeBusinesses.ToListAsync();
 
-            var typeResponse = new List<TypeResponse>();
+            var typeBusinnessResponse = new List<TypeBusinessResponse>();
 
-            foreach (var typeBusinesse in typeBusinesses)
+            foreach (var typeBusiness in listTypeBusiness)
             {
-                var businessResponses = new List<BusinesResponse>();
+                var businnessResponses = new List<BusinessResponse>();
 
-                foreach (var item in typeBusinesse.Business)
+                foreach (var businnessResponse in typeBusiness.Business.OrderBy(b=>b.Name))
                 {
-                    businessResponses.Add(new BusinesResponse
+                    businnessResponses.Add(new BusinessResponse
                     {
-                        BusinessId = item.BusinessId,
-                        Email = item.Email,
-                        Image = item.Image,
-                        Latitude = item.Latitude,
-                        Lengthe = item.Lengthe,
-                        Name = item.Name,
-                        PhoneBusiness = item.PhoneBusiness,
-                        RNC = item.RNC,
-                        TypeBusinessId = item.TypeBusinessId,
-
+                        BusinessId =businnessResponse.BusinessId,
+                        Email = businnessResponse.Email,
+                        Image = businnessResponse.Image,
+                        Latitude = businnessResponse.Latitude,
+                        Lengthe = businnessResponse.Lengthe,
+                        Name = businnessResponse.Name,
+                        PhoneBusiness = businnessResponse.PhoneBusiness,
+                        RNC = businnessResponse.RNC,
                     });
                 }
 
-
-                typeResponse.Add(new TypeResponse
+                typeBusinnessResponse.Add(new TypeBusinessResponse
                 {
-                    Businesss = businessResponses,
-                    Type = typeBusinesse.Type,
-                    TypeBusinessId = typeBusinesse.TypeBusinessId,
+                    Business = businnessResponses,
+                    Type= typeBusiness.Type,
+                    TypeBusinessId=typeBusiness.TypeBusinessId,
                 });
             }
-            return Ok(typeResponse);
-
+            return Ok(typeBusinnessResponse);
         }
-
 
         // GET: api/TypeBusinesses/5
         [ResponseType(typeof(TypeBusiness))]
         public async Task<IHttpActionResult> GetTypeBusiness(int id)
         {
-            var typeBusiness = await db.TypeBusinesses.FindAsync(id);
+            TypeBusiness typeBusiness = await db.TypeBusinesses.FindAsync(id);
             if (typeBusiness == null)
             {
                 return NotFound();

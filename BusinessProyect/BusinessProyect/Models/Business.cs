@@ -1,9 +1,8 @@
 ﻿namespace BusinessProyect.Models
 {
-    public class Businesss
+    public class Business
     {
         public int BusinessId { get; set; }
-        public int TypeBusinessId { get; set; }
         public string Image { get; set; }
         public string Name { get; set; }
         public string RNC { get; set; }

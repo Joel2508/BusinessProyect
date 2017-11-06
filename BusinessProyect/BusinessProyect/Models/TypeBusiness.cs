@@ -9,21 +9,27 @@ namespace BusinessProyect.Models
 
     public class TypeBusiness
     {
+
         public int TypeBusinessId { get; set; }
         public string Type { get; set; }
-        public List<Businesss> Businesss { get; set; }
+        public List<Business> Business { get; set; }
 
         #region Service
         private NavigationService navigationService;
         #endregion
 
+        public TypeBusiness()
+        {
+            navigationService = new NavigationService();
+        }
+
         #region Command
         public ICommand SelectBusinessCommand { get { return new RelayCommand(SelectBusiness); } }
-        private void SelectBusiness()
+        private async void SelectBusiness()
         {
             var mainViewModel = MainViewModel.GetInstance();
             mainViewModel.Businesss = new BusinesssViewModel();
-            navigationService.SetPageNavigation("BusinessPage");
+            await navigationService.Navigation("BusinessPage");
         }
         #endregion
     }

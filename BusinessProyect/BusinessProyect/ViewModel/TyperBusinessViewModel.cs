@@ -14,12 +14,13 @@
         #region Attributes
         private bool isRefreshing;
         private List<TypeBusiness> typeBusiness;
+        private ObservableCollection<TypeBusiness> typerBusiness;
         #endregion
 
         #region Service
-        public NavigationService navigationService;
-        public ApiService apiService;
-        public DialogService dialogService;
+        private NavigationService navigationService;
+        private ApiService apiService;
+        private DialogService dialogService;
         #endregion
 
         #region Event
@@ -45,7 +46,21 @@
         #endregion
 
         #region Observable
-        public ObservableCollection<TypeBusiness> TyperBusiness { get; set; }
+        public ObservableCollection<TypeBusiness> TyperBusiness
+        {
+            get
+            {
+                return typerBusiness;
+            }
+            set
+            {
+                if(typerBusiness != value)
+                {
+                    typerBusiness = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TyperBusiness)));
+                }
+            }
+        }
         #endregion
 
         #region Constructor
@@ -60,28 +75,36 @@
         #endregion
 
         #region Method
-
         private async void LoadTyperBusiness()
         {
+
             IsRefreshing = true;
 
-            var internet = await apiService.CheckConnection();
-            if (!internet.IsSuccess)
+            var connection = await apiService.CheckConnection();
+            if (!connection.IsSuccess)
             {
-                await dialogService.ShowsMessage("Error", internet.Message);
+                await dialogService.ShowsMessage("Error", connection.Message);
                 return;
             }
-            var response = await apiService.Get<TypeBusiness>
+
+            var mainViewModel = MainViewModel.GetInstance();
+            mainViewModel.Token = new TokenResponse();
+
+            var response = await apiService.GetList<TypeBusiness>
                 ("http://www.xtudia.somee.com",
-                "/api", "TypeBusinesses");
+                "/api", 
+                "/TypeBusinesses", 
+                mainViewModel.Token.TokenType, 
+                mainViewModel.Token.AccessToken);
+
             if (!response.IsSuccess)
             {
                 await dialogService.ShowsMessage("Error", response.Message);
                 return;
             }
+
             typeBusiness = (List<TypeBusiness>)response.Result;
             TyperBusiness = new ObservableCollection<TypeBusiness>();
-
             IsRefreshing = false;
 
         }

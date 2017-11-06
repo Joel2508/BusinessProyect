@@ -39,7 +39,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\IntanceLocator.cs" />
-    <Compile Include="Models\Businesss.cs" />
+    <Compile Include="Models\Business.cs" />
     <Compile Include="Models\Responses.cs" />
     <Compile Include="Models\TokenResponse.cs" />
     <Compile Include="Models\TypeBusiness.cs" />

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessProyect.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,7 @@ namespace BusinessProyect.ViewModel
 
         #region Properties
         public TyperBusinessViewModel TyperBusines { get; set; }
+        public TokenResponse Token { get; set; }
         public BusinesssViewModel Businesss { get; set; }
         public LoginViewModel Login { get; set; }
         #endregion
@@ -29,7 +31,7 @@ namespace BusinessProyect.ViewModel
         {
             if (instance == null)
             {
-                instance = new MainViewModel();
+                return new MainViewModel();
             }
             return instance;
         }
