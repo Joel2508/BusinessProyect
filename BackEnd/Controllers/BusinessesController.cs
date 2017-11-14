@@ -1,18 +1,25 @@
-﻿namespace BackEnd.Controllers
-{
-    using System.Data.Entity;
-    using System.Threading.Tasks;
-    using System.Net;
-    using System.Web.Mvc;
-    using Domain.Context;
-    using Domain.Model;
-    using BackEnd.Models.ModelView;
-    using BackEnd.Helper;
-    using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Net;
+using System.Web;
+using System.Web.Mvc;
+using BackEnd.Models;
+using Domain.Model;
+using BackEnd.Models.ModelView;
+using System.IO;
+using BackEnd.Helper;
 
+namespace BackEnd.Controllers
+{
     public class BusinessesController : Controller
     {
-        private ContextDomain db = new ContextDomain();
+        private ContextBackEnd db = new ContextBackEnd();
+
+      
 
         // GET: Businesses
         public async Task<ActionResult> Index()
@@ -28,7 +35,7 @@
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Business business = await db.Businesses.FindAsync(id);
+            var business = await db.Businesses.FindAsync(id);
             if (business == null)
             {
                 return HttpNotFound();
@@ -43,7 +50,7 @@
             return View();
         }
 
-  
+      
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(BusinessView view)
@@ -52,16 +59,14 @@
             {
                 var pic = string.Empty;
                 var folder = "~/Content/Image";
-
-                if(view != null)
+                if(view.ImageView != null)
                 {
                     pic = FileHelper.UpPhote(view.ImageView, folder);
                     pic = string.Format("{0}/{1}", folder, pic);
                 }
-
-                var businesView = ToViewBusiness(view);
-                businesView.Image = pic;
-                db.Businesses.Add(businesView);
+                var business = ToViewBusiness(view);
+                business.Image = pic;
+                db.Businesses.Add(business);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
@@ -72,19 +77,20 @@
 
         private Business ToViewBusiness(BusinessView view)
         {
+            
             return new Business
             {
-                BusinessId =view.BusinessId,
-                Email=view.Email,
+                Address = view.Address,
+                BusinessId = view.BusinessId,
+                Email = view.Email,
                 Image = view.Image,
-                Latitude = view.Latitude,
-                Lengthe = view.Lengthe,
+                Latituded =Convert.ToDecimal(view.LatitudView),
+                Longitud = Convert.ToDecimal(view.LogintudView),
                 Name = view.Name,
-                PhoneBusiness = view.PhoneBusiness,
-                RNC = view.RNC,
                 TypeBusiness = view.TypeBusiness,
                 TypeBusinessId = view.TypeBusinessId,
             };
+            
         }
 
         // GET: Businesses/Edit/5
@@ -99,26 +105,22 @@
             {
                 return HttpNotFound();
             }
-
             ViewBag.TypeBusinessId = new SelectList(db.TypeBusinesses, "TypeBusinessId", "Type", business.TypeBusinessId);
-            var viewBusiness = ViewToBusiness(business);
-            return View(viewBusiness);
+            var busines = ViewToBusiness(business);
+            return View(busines);
         }
 
         private BusinessView ViewToBusiness(Business business)
         {
             return new BusinessView
             {
-                 BusinessId =business.BusinessId,
-                 Email = business.Email,
-                 Image = business.Image,
-                 Latitude = business.Latitude,
-                 Lengthe = business.Lengthe,
-                 Name = business.Name,
-                 PhoneBusiness = business.PhoneBusiness,
-                 RNC = business.RNC,
-                 TypeBusiness = business.TypeBusiness,
-                 TypeBusinessId = business.TypeBusinessId,
+                Address = business.Address,
+                BusinessId = business.BusinessId,
+                Email = business.Email,
+                Image = business.Image,    
+                Name = business.Name,
+                TypeBusiness = business.TypeBusiness,
+                TypeBusinessId = business.TypeBusinessId,
             };
         }
 
@@ -128,7 +130,6 @@
         {
             if (ModelState.IsValid)
             {
-
                 var pic = string.Empty;
                 var folder = "~/Content/Image";
 
@@ -138,9 +139,9 @@
                     pic = string.Format("{0}/{1}", folder, pic);
                 }
 
-                var bussines = ToViewBusiness(view);
-                bussines.Image = pic;
-                db.Entry(bussines).State = EntityState.Modified;
+                var business = ToViewBusiness(view);
+                business.Image = pic;
+                db.Entry(business).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
@@ -155,7 +156,7 @@
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var business = await db.Businesses.FindAsync(id);
+            Business business = await db.Businesses.FindAsync(id);
             if (business == null)
             {
                 return HttpNotFound();

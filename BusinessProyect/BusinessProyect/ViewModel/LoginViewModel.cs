@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
+using BusinessProyect.Models;
 
 namespace BusinessProyect.ViewModel
 {
@@ -147,29 +148,12 @@ namespace BusinessProyect.ViewModel
             IsRunning = true;
             IsEnabled = false;
 
-            var connection = await apiService.CheckConnection();
-
-            if (!connection.IsSuccess)
-            {
-                IsRunning = false;
-                IsEnabled = true;
-                await dialogService.ShowsMessage("Error", connection.Message);
-                return;
-            }
-
+           
 
             var response = await apiService.GetToken("http://www.xtudia.somee.com",
                 Email, Password);
 
-            if (response == null)
-            {
-                IsEnabled = true;
-                IsRunning = false;
-                await dialogService.ShowsMessage("Error", "Not service the internet");
-                Email = null;
-                Password = null;
-                return;
-            }
+            LoadResponse(response);
 
             if (string.IsNullOrEmpty(response.AccessToken))
             {
@@ -193,6 +177,32 @@ namespace BusinessProyect.ViewModel
             IsEnabled = true;
 
             
+        }
+
+        private async void LoadResponse(TokenResponse response)
+        {
+            if (response == null)
+            {
+                IsEnabled = true;
+                IsRunning = false;
+                await dialogService.ShowsMessage("Error", "Not service the internet");
+                Email = null;
+                Password = null;
+                return;
+            }
+
+        }
+
+        private async void LoadConnection(Responses connection)
+        {
+            if (!connection.IsSuccess)
+            {
+                IsRunning = false;
+                IsEnabled = true;
+                await dialogService.ShowsMessage("Error", connection.Message);
+                return;
+            }
+
         }
     }
 }

@@ -7,6 +7,7 @@
     using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Windows.Input;
+    using System;
 
     public class TyperBusinessViewModel : INotifyPropertyChanged
     {
@@ -79,23 +80,16 @@
         {
 
             IsRefreshing = true;
-
-            var connection = await apiService.CheckConnection();
-            if (!connection.IsSuccess)
-            {
-                await dialogService.ShowsMessage("Error", connection.Message);
-                return;
-            }
-
+        
             var mainViewModel = MainViewModel.GetInstance();
             mainViewModel.Token = new TokenResponse();
 
             var response = await apiService.GetList<TypeBusiness>
                 ("http://www.xtudia.somee.com",
                 "/api", 
-                "/TypeBusinesses", 
-                mainViewModel.Token.TokenType, 
-                mainViewModel.Token.AccessToken);
+                "/TypeBusinesses",
+                mainViewModel.Token.AccessToken,
+                mainViewModel.Token.TokenType);
 
             if (!response.IsSuccess)
             {
@@ -105,7 +99,17 @@
 
             typeBusiness = (List<TypeBusiness>)response.Result;
             TyperBusiness = new ObservableCollection<TypeBusiness>();
+
             IsRefreshing = false;
+        }
+
+        private async void LoadConnection(Responses connection)
+        {
+            if (!connection.IsSuccess)
+            {
+                await dialogService.ShowsMessage("Error", connection.Message);
+                return;
+            }
 
         }
         #endregion

@@ -74,7 +74,7 @@ namespace BusinessProyect.Service
             {
                 var client = new HttpClient();
                 client.DefaultRequestHeaders.Authorization = 
-                    new AuthenticationHeaderValue(tokenType, accessToken);
+                    new AuthenticationHeaderValue(accessToken, tokenType);
                 client.BaseAddress = new Uri(urlBase);
                 var url = string.Format("{0}{1}", servicePrefix, controller);
                 var response = await client.GetAsync(url);

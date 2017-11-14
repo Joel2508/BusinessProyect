@@ -10,7 +10,7 @@
     @Html.ActionLink(" ", "Create", new { }, new { @class = "glyphicon glyphicon-plus btn btn-info" })
 </p>
 <p>
-    @Html.ActionLink(" ", "Index","Home", new { }, new { @class = "glyphicon glyphicon-home btn btn-primary" })
+    @Html.ActionLink(" ", "Index", "Home", new { @class = "glyphicon glyphicon-home btn btn-default" })
 </p>
 <table class="table">
     <tr>
@@ -24,64 +24,53 @@
             @Html.DisplayNameFor(model => model.Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.RNC)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Email)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PhoneBusiness)
+            @Html.DisplayNameFor(model => model.Address)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Latitude)
+            @Html.DisplayNameFor(model => model.Latituded)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Lengthe)
+            @Html.DisplayNameFor(model => model.Longitud)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model.OrderBy(b=>b.Name)) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.TypeBusiness.Type)
-        </td>
-        <td>
-            @if (!string.IsNullOrEmpty(item.Image))
-            {
-                <img src="@Url.Content(item.Image)" alt="Image" style="width:150px;height:150px;max-height:100px;max-width:100px"/>
-            }
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RNC)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PhoneBusiness)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Latitude)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Lengthe)
-        </td>
-        <td>
-            <p>
-                @Html.ActionLink(" ", "Edit", new { id = item.BusinessId }, new { @class = "glyphicon glyphicon-wrench btn btn-default" })
-            </p>
-            <p>
-                @Html.ActionLink(" ", "Details", new { id = item.BusinessId }, new { @class = "glyphicon glyphicon-eye-open btn btn-warning" })
-            </p>
-            <p>
+    @foreach (var item in Model.OrderBy(b => b.Name))
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TypeBusiness.Type)
+            </td>
+            <td>
+                @if (!string.IsNullOrEmpty(item.Image))
+                {
+                    <img src="@Url.Content(item.Image)" alt="Image" style="width:100px;height:150px;max-width: 100%; height: auto;" />
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Latituded)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Longitud)
+            </td>
+            <td>
+                @Html.ActionLink(" ", "Edit", new { id = item.BusinessId }, new { @class = "glyphicon glyphicon-wrench btn btn-default" }) 
+                @Html.ActionLink(" ", "Details", new { id = item.BusinessId }, new { @class = "glyphicon glyphicon-eye-open btn btn-warning" }) 
                 @Html.ActionLink(" ", "Delete", new { id = item.BusinessId }, new { @class = "glyphicon glyphicon-trash btn btn-danger" })
-            </p>
-        </td>
-    </tr>
-}
+            </td>
+        </tr>
+    }
 
 </table>

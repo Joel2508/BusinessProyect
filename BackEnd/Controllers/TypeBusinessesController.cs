@@ -9,12 +9,13 @@ using System.Web;
 using System.Web.Mvc;
 using Domain.Context;
 using Domain.Model;
+using BackEnd.Models;
 
 namespace BackEnd.Controllers
 {
     public class TypeBusinessesController : Controller
     {
-        private ContextDomain db = new ContextDomain();
+        private ContextBackEnd db = new ContextBackEnd();
 
         // GET: TypeBusinesses
         public async Task<ActionResult> Index()
