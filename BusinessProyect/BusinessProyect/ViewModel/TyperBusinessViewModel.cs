@@ -8,6 +8,7 @@
     using System.ComponentModel;
     using System.Windows.Input;
     using System;
+    using Plugin.Connectivity;
 
     public class TyperBusinessViewModel : INotifyPropertyChanged
     {
@@ -55,7 +56,7 @@
             }
             set
             {
-                if(typerBusiness != value)
+                if (typerBusiness != value)
                 {
                     typerBusiness = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TyperBusiness)));
@@ -79,16 +80,20 @@
         private async void LoadTyperBusiness()
         {
 
-            IsRefreshing = true;
-        
-            var mainViewModel = MainViewModel.GetInstance();
-            mainViewModel.Token = new TokenResponse();
+            var connection = await apiService.CheckConnection();
+            if (!connection.IsSuccess)
+            {
+                await dialogService.ShowsMessage("Error", connection.Message);
+                return;
+            }
 
+
+            IsRefreshing = true;
+            var mainViewModel = MainViewModel.GetInstance();           
             var response = await apiService.GetList<TypeBusiness>
-                ("http://www.xtudia.somee.com",
-                "/api", 
-                "/TypeBusinesses",
-                mainViewModel.Token.AccessToken,
+                ("http://xtudiaconstructor.somee.com", 
+                "/api", "/TypeBusinesses",
+                mainViewModel.Token.AccessToken, 
                 mainViewModel.Token.TokenType);
 
             if (!response.IsSuccess)
@@ -99,8 +104,22 @@
 
             typeBusiness = (List<TypeBusiness>)response.Result;
             TyperBusiness = new ObservableCollection<TypeBusiness>();
-
+            LoadTyper(typeBusiness);
             IsRefreshing = false;
+        }
+
+        private void LoadTyper(List<TypeBusiness> typeBusiness)
+        {
+            TyperBusiness.Clear();
+            foreach (var typerBusines in typerBusiness)
+            {
+                TyperBusiness.Add(new TypeBusiness
+                {
+                    Business=typerBusines.Business,
+                    Type = typerBusines.Type,
+                    TypeBusinessId = typerBusines.TypeBusinessId,
+                });
+            }
         }
 
         private async void LoadConnection(Responses connection)

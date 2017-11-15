@@ -38,11 +38,11 @@ namespace API.Controllers
                         BusinessId =businnessResponse.BusinessId,
                         Email = businnessResponse.Email,
                         Image = businnessResponse.Image,
-                        Latitude = businnessResponse.Latitude,
-                        Lengthe = businnessResponse.Lengthe,
+                        Latituded=businnessResponse.Latituded,
+                        Address=businnessResponse.Address,
+                        Longitud = businnessResponse.Longitud,
                         Name = businnessResponse.Name,
-                        PhoneBusiness = businnessResponse.PhoneBusiness,
-                        RNC = businnessResponse.RNC,
+                        TypeBusinessId = businnessResponse.TypeBusinessId,
                     });
                 }
 
@@ -60,7 +60,7 @@ namespace API.Controllers
         [ResponseType(typeof(TypeBusiness))]
         public async Task<IHttpActionResult> GetTypeBusiness(int id)
         {
-            TypeBusiness typeBusiness = await db.TypeBusinesses.FindAsync(id);
+            var typeBusiness = await db.TypeBusinesses.FindAsync(id);
             if (typeBusiness == null)
             {
                 return NotFound();

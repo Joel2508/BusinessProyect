@@ -17,15 +17,13 @@
 
         [Display(Name ="Name")]
         [Required(ErrorMessage ="The filed {0} is required")]
-        [MaxLength(15,ErrorMessage = "The filed {0} you must enter maximum in character is")]
+        [MaxLength(100,ErrorMessage = "The filed {0} you must enter maximum in character is")]
         public string Name { get; set; }
 
         [Required(ErrorMessage = "The filed {0} is required")]
-        [MaxLength(20, ErrorMessage = "The filed {0} you must enter maximum in character is")]
+        [MaxLength(100, ErrorMessage = "The filed {0} you must enter maximum in character is")]
         [DataType(DataType.EmailAddress)]
-        public string Email { get; set; }
-
-                
+        public string Email { get; set; }                
 
         [Required(ErrorMessage = "The filed {0} is required")]
         [MaxLength(100, ErrorMessage = "The filed {0} you must enter maximum in character is")]

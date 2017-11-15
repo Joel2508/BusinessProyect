@@ -148,13 +148,37 @@ namespace BusinessProyect.ViewModel
             IsRunning = true;
             IsEnabled = false;
 
-           
+            if (!CrossConnectivity.Current.IsConnected)
+            {
+                IsRunning = false;
+                IsEnabled = true;
+                await dialogService.ShowsMessage("Error", "You do not have an Internet connection.");
+                return;
+            }
 
-            var response = await apiService.GetToken("http://www.xtudia.somee.com",
+            var isRechable = await CrossConnectivity.Current.IsRemoteReachable("google.com");
+            if (!isRechable)
+            {
+                IsRunning = false;
+                IsEnabled = true;
+                await dialogService.ShowsMessage("Error", "Internet connection failed, consult your network service operator.");
+                return;
+            }
+
+            var response = await apiService.GetToken("http://xtudiaconstructor.somee.com",
                 Email, Password);
 
-            LoadResponse(response);
+            if (response==null)
+            {
+                IsEnabled = true;
+                IsRunning = false;
+                await dialogService.ShowsMessage("Error", "Not service the internet.");
+                Email = null;
+                Password = null;
+                return;
+            }
 
+    
             if (string.IsNullOrEmpty(response.AccessToken))
             {
                 IsEnabled = true;
@@ -179,30 +203,5 @@ namespace BusinessProyect.ViewModel
             
         }
 
-        private async void LoadResponse(TokenResponse response)
-        {
-            if (response == null)
-            {
-                IsEnabled = true;
-                IsRunning = false;
-                await dialogService.ShowsMessage("Error", "Not service the internet");
-                Email = null;
-                Password = null;
-                return;
-            }
-
-        }
-
-        private async void LoadConnection(Responses connection)
-        {
-            if (!connection.IsSuccess)
-            {
-                IsRunning = false;
-                IsEnabled = true;
-                await dialogService.ShowsMessage("Error", connection.Message);
-                return;
-            }
-
-        }
     }
 }

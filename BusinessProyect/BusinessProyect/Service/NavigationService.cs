@@ -20,8 +20,7 @@ namespace BusinessProyect.Service
                 case "TyperBusinessPage":
                     await Application.Current.MainPage.Navigation.PushAsync(new TyperBusinessPage());
                     break;
-                default:
-                    break;
+                
             }
         }
     }

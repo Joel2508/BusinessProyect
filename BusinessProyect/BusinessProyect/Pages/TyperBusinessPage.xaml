@@ -29,7 +29,7 @@
                                     FontSize="Large"        
                                     FontAttributes="Bold"
                                     HorizontalOptions="FillAndExpand"         
-                                    Text="{Binding Type}">
+                                    Text="{Binding Type, Mode=TwoWay}">
                                 </Label>
                                 <Image                           
                                 HorizontalOptions="End"
