@@ -9,14 +9,16 @@
     using System.Windows.Input;
     using System;
     using Plugin.Connectivity;
+    using System.Linq;
 
     public class TyperBusinessViewModel : INotifyPropertyChanged
     {
 
         #region Attributes
+        private string filter;
         private bool isRefreshing;
         private List<TypeBusiness> typeBusiness;
-        private ObservableCollection<TypeBusiness> typerBusiness;
+        private ObservableCollection<TypeBusiness> typerObservarBusiness;
         #endregion
 
         #region Service
@@ -30,6 +32,22 @@
         #endregion
 
         #region Properties
+        public string Filter
+        {
+            get
+            {
+                return filter;
+            }
+            set
+            {
+                if (filter != value)
+                {
+                    filter = value;
+                    ReadTypeBusiness(typeBusiness);
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Filter)));
+                }
+            }
+        }
         public bool IsRefreshing
         {
             get
@@ -52,13 +70,13 @@
         {
             get
             {
-                return typerBusiness;
+                return typerObservarBusiness;
             }
             set
             {
-                if (typerBusiness != value)
+                if (typerObservarBusiness != value)
                 {
-                    typerBusiness = value;
+                    typerObservarBusiness = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TyperBusiness)));
                 }
             }
@@ -79,19 +97,19 @@
         #region Method
         private async void LoadTyperBusiness()
         {
-
+            IsRefreshing = true;
             var connection = await apiService.CheckConnection();
             if (!connection.IsSuccess)
             {
+                IsRefreshing = false;
                 await dialogService.ShowsMessage("Error", connection.Message);
                 return;
             }
 
 
-            IsRefreshing = true;
             var mainViewModel = MainViewModel.GetInstance();           
             var response = await apiService.GetList<TypeBusiness>
-                ("http://xtudiaconstructor.somee.com", 
+                ("http://www.xtudiaconstructor.somee.com", 
                 "/api", "/TypeBusinesses",
                 mainViewModel.Token.AccessToken, 
                 mainViewModel.Token.TokenType);
@@ -103,23 +121,30 @@
             }
 
             typeBusiness = (List<TypeBusiness>)response.Result;
-            TyperBusiness = new ObservableCollection<TypeBusiness>();
-            LoadTyper(typeBusiness);
+            TyperBusiness = new ObservableCollection<TypeBusiness>(typeBusiness.OrderBy(t=>t.Type));
             IsRefreshing = false;
         }
 
-        private void LoadTyper(List<TypeBusiness> typeBusiness)
+        private void ReadTypeBusiness(List<TypeBusiness> typeBusiness)
         {
             TyperBusiness.Clear();
-            foreach (var typerBusines in typerBusiness)
+            foreach (var typeBusines in typeBusiness.OrderBy(t => t.Type))
             {
                 TyperBusiness.Add(new TypeBusiness
                 {
-                    Business=typerBusines.Business,
-                    Type = typerBusines.Type,
-                    TypeBusinessId = typerBusines.TypeBusinessId,
+                    Business= typeBusines.Business,
+                    Type=typeBusines.Type,
+                    TypeBusinessId=typeBusines.TypeBusinessId,
                 });
             }
+        }
+
+        public ICommand SearchCommand { get { return new RelayCommand(Search); } }
+
+        private void Search()
+        {
+
+            ReadTypeBusiness(typeBusiness.Where(t => t.Type.ToLower() == Filter.ToLower()).ToList());
         }
 
         private async void LoadConnection(Responses connection)

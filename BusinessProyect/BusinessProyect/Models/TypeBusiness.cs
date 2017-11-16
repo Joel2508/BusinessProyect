@@ -8,7 +8,7 @@ namespace BusinessProyect.Models
     using System.Windows.Input;
 
     public class TypeBusiness
-    {
+    {        
 
         public int TypeBusinessId { get; set; }
         public string Type { get; set; }
@@ -28,7 +28,7 @@ namespace BusinessProyect.Models
         private async void SelectBusiness()
         {
             var mainViewModel = MainViewModel.GetInstance();
-            mainViewModel.Businesss = new BusinesssViewModel();
+            mainViewModel.Business = new BusinesssViewModel(Business);
             await navigationService.Navigation("BusinessPage");
         }
         #endregion

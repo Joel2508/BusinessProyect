@@ -101,9 +101,15 @@ namespace BusinessProyect.Service
                 return new Responses
                 {
                     IsSuccess = false,
-                    Message = ex.Message,
+                    Message =ToMessage(ex.Message),
                 };
             }
+        }
+
+        private string ToMessage(string message)
+        {            
+            message = "The connection internet failure, please the your operator the service";
+            return message;
         }
         #endregion
 

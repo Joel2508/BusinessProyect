@@ -3,46 +3,50 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BusinessProyect.Pages.TyperBusinessPage"
              BindingContext="{Binding Main, Source={StaticResource Locator}}"
-             BackgroundColor="{StaticResource MainColor}">
-
-    <ContentPage.Content>
-        <StackLayout
+             BackgroundColor="{StaticResource MainColor}"
+             Title="Types">
+    <StackLayout
         BindingContext="{Binding TyperBusines}"
-        Orientation="Horizontal"
-        Padding="5">
-            <ListView
+        Padding="8">
+        <SearchBar
+            Placeholder="Search....."
+            HeightRequest="40"
+            Text="{Binding Filter, Mode=TwoWay}"                
+            SearchCommand="{Binding SearchCommand}">
+        </SearchBar>
+        <ListView
             HasUnevenRows="True"
             IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"            
             IsPullToRefreshEnabled="True"
             RefreshCommand="{Binding RefreshCommand}"            
             ItemsSource="{Binding TyperBusiness}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <Label
-                                    Grid.Column="0"
-                                    FontSize="Large"        
-                                    FontAttributes="Bold"
-                                    HorizontalOptions="FillAndExpand"         
-                                    Text="{Binding Type, Mode=TwoWay}">
-                                </Label>
-                                <Image                           
-                                HorizontalOptions="End"
-                                Source="ic_action_chevron_right.png">
-                                    <Image.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding SelectBusinessCommand}"/>
-                                    </Image.GestureRecognizers>
-                                </Image>
-                            </Grid>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackLayout>
-    </ContentPage.Content>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Label
+                                Grid.Column="0"
+                                FontSize="Medium"        
+                                FontAttributes="None"
+                                Margin="30,0"
+                                HorizontalOptions="FillAndExpand"         
+                                Text="{Binding Type}">
+                            </Label>
+                            <Image                           
+                            HorizontalOptions="End"
+                            Source="ic_arrow_forward.png">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SelectBusinessCommand}"/>
+                                </Image.GestureRecognizers>
+                            </Image>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
 </ContentPage>

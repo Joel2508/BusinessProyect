@@ -14,8 +14,8 @@
 
         public string Address { get; set; }
 
-        public decimal Latituded { get; set; }
+        public double Latituded { get; set; }
 
-        public decimal Longitud { get; set; }
+        public double Longitud { get; set; }
     }
 }

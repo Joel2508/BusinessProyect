@@ -38,7 +38,7 @@
         <th></th>
     </tr>
 
-    @foreach (var item in Model.OrderBy(b => b.Name))
+    @foreach (var item in Model.OrderBy(b => b.TypeBusinessId))
     {
         <tr>
             <td>
@@ -66,9 +66,15 @@
                 @Html.DisplayFor(modelItem => item.Longitud)
             </td>
             <td>
-                @Html.ActionLink(" ", "Edit", new { id = item.BusinessId }, new { @class = "glyphicon glyphicon-wrench btn btn-default" }) 
-                @Html.ActionLink(" ", "Details", new { id = item.BusinessId }, new { @class = "glyphicon glyphicon-eye-open btn btn-warning" }) 
-                @Html.ActionLink(" ", "Delete", new { id = item.BusinessId }, new { @class = "glyphicon glyphicon-trash btn btn-danger" })
+                <p>
+                    @Html.ActionLink(" ", "Edit", new { id = item.BusinessId }, new { @class = "glyphicon glyphicon-wrench btn btn-default" })
+                </p>
+                <p>
+                    @Html.ActionLink(" ", "Details", new { id = item.BusinessId }, new { @class = "glyphicon glyphicon-eye-open btn btn-warning" })
+                </p>
+                <p>
+                    @Html.ActionLink(" ", "Delete", new { id = item.BusinessId }, new { @class = "glyphicon glyphicon-trash btn btn-danger" })
+                </p>
             </td>
         </tr>
     }

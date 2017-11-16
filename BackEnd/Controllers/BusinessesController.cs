@@ -46,7 +46,7 @@ namespace BackEnd.Controllers
         // GET: Businesses/Create
         public ActionResult Create()
         {
-            ViewBag.TypeBusinessId = new SelectList(db.TypeBusinesses, "TypeBusinessId", "Type");
+            ViewBag.TypeBusinessId = new SelectList(db.TypeBusinesses.OrderBy(t=>t.Type), "TypeBusinessId", "Type");
             return View();
         }
 
@@ -71,7 +71,7 @@ namespace BackEnd.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.TypeBusinessId = new SelectList(db.TypeBusinesses, "TypeBusinessId", "Type", view.TypeBusinessId);
+            ViewBag.TypeBusinessId = new SelectList(db.TypeBusinesses.OrderBy(t=>t.Type), "TypeBusinessId", "Type", view.TypeBusinessId);
             return View(view);
         }
 
@@ -84,8 +84,8 @@ namespace BackEnd.Controllers
                 BusinessId = view.BusinessId,
                 Email = view.Email,
                 Image = view.Image,
-                Latituded =Convert.ToDecimal(view.LatitudView),
-                Longitud = Convert.ToDecimal(view.LogintudView),
+                Latituded =Convert.ToDouble(view.LatitudView),
+                Longitud = Convert.ToDouble(view.LogintudView),
                 Name = view.Name,
                 TypeBusiness = view.TypeBusiness,
                 TypeBusinessId = view.TypeBusinessId,
@@ -105,7 +105,7 @@ namespace BackEnd.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.TypeBusinessId = new SelectList(db.TypeBusinesses, "TypeBusinessId", "Type", business.TypeBusinessId);
+            ViewBag.TypeBusinessId = new SelectList(db.TypeBusinesses.OrderBy(t=>t.Type), "TypeBusinessId", "Type", business.TypeBusinessId);
             var busines = ViewToBusiness(business);
             return View(busines);
         }
@@ -118,8 +118,8 @@ namespace BackEnd.Controllers
                 BusinessId = business.BusinessId,
                 Email = business.Email,
                 Image = business.Image,
-                LatitudView = business.Latituded.ToString(),
-                LogintudView = business.Longitud.ToString(),
+                LatitudView = Convert.ToString(business.Latituded),
+                LogintudView = Convert.ToString(business.Longitud),
                 Name = business.Name,
                 TypeBusiness = business.TypeBusiness,
                 TypeBusinessId = business.TypeBusinessId,
@@ -147,7 +147,7 @@ namespace BackEnd.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.TypeBusinessId = new SelectList(db.TypeBusinesses, "TypeBusinessId", "Type", view.TypeBusinessId);
+            ViewBag.TypeBusinessId = new SelectList(db.TypeBusinesses.OrderBy(t => t.Type), "TypeBusinessId", "Type", view.TypeBusinessId);
             return View(view);
         }
 

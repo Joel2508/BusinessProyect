@@ -13,7 +13,7 @@ namespace BusinessProyect.ViewModel
         #region Properties
         public TyperBusinessViewModel TyperBusines { get; set; }
         public TokenResponse Token { get; set; }
-        public BusinesssViewModel Businesss { get; set; }
+        public BusinesssViewModel Business { get; set; }
         public LoginViewModel Login { get; set; }
         #endregion
 

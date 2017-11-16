@@ -29,9 +29,9 @@
         [MaxLength(100, ErrorMessage = "The filed {0} you must enter maximum in character is")]
         public string Address { get; set; }
 
-        public decimal Latituded { get; set; }
+        public double Latituded { get; set; }
 
-        public decimal Longitud { get; set; }
+        public double Longitud { get; set; }
 
         [JsonIgnore]
         public virtual TypeBusiness TypeBusiness { get; set; }            

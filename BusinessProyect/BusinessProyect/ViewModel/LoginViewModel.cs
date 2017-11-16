@@ -165,7 +165,7 @@ namespace BusinessProyect.ViewModel
                 return;
             }
 
-            var response = await apiService.GetToken("http://xtudiaconstructor.somee.com",
+            var response = await apiService.GetToken("http://www.xtudiaconstructor.somee.com",
                 Email, Password);
 
             if (response==null)
