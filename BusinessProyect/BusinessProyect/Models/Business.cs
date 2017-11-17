@@ -1,4 +1,10 @@
-﻿namespace BusinessProyect.Models
+﻿using GalaSoft.MvvmLight.Command;
+using System.Windows.Input;
+using System;
+using BusinessProyect.ViewModel;
+using BusinessProyect.Service;
+
+namespace BusinessProyect.Models
 {
     public class Business
     {
@@ -10,12 +16,33 @@
         public decimal Latituded { get; set; }
         public decimal Longitud { get; set; }
 
-        public string FullImage
+        private NavigationService navigationService;
+
+        public Business()
         {
+            navigationService = new NavigationService();
+        }
+
+        public string FullImage
+        {            
             get
             {
-                return string.Format("http://www.xtudiaconstructor.somee.com/{0}", Image.Substring(1));
+                if (string.IsNullOrEmpty(Image))
+                {
+                    return "business.png";
+                }
+                return string.Format("http://www.xtudiaconstructor.somee.com{0}", Image.Substring(1));
             }
+        }
+
+
+
+        public ICommand OneBusinessCommand { get { return new RelayCommand(OneBusiness); } }
+
+        private async void OneBusiness()
+        {
+            MainViewModel.GetInstance().OneBusinessMap = new OneBusinessMapViewModel();
+            await navigationService.Navigation("OneBusinessMapPage");
         }
     }
 }

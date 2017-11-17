@@ -15,6 +15,7 @@ namespace BusinessProyect.ViewModel
         public TokenResponse Token { get; set; }
         public BusinesssViewModel Business { get; set; }
         public LoginViewModel Login { get; set; }
+        public OneBusinessMapViewModel OneBusinessMap { get; set; }
         #endregion
 
         #region Constructor

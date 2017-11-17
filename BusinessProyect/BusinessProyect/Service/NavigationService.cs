@@ -20,7 +20,10 @@ namespace BusinessProyect.Service
                 case "TyperBusinessPage":
                     await Application.Current.MainPage.Navigation.PushAsync(new TyperBusinessPage());
                     break;
-                
+                case "OneBusinessMapPage":
+                    await Application.Current.MainPage.Navigation.PushAsync(new OneBusinessMapPage());
+                    break;
+
             }
         }
     }

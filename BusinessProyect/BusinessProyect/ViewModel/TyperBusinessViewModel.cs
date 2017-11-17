@@ -43,7 +43,7 @@
                 if (filter != value)
                 {
                     filter = value;
-                    ReadTypeBusiness(typeBusiness);
+                    Search();
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Filter)));
                 }
             }
@@ -139,13 +139,6 @@
             }
         }
 
-        public ICommand SearchCommand { get { return new RelayCommand(Search); } }
-
-        private void Search()
-        {
-
-            ReadTypeBusiness(typeBusiness.Where(t => t.Type.ToLower() == Filter.ToLower()).ToList());
-        }
 
         private async void LoadConnection(Responses connection)
         {
@@ -159,6 +152,30 @@
         #endregion
 
         #region Command
+        public ICommand SearchCommand { get { return new RelayCommand(Search); } }
+
+        private void Search()
+        {
+            IsRefreshing = true;
+            if (string.IsNullOrEmpty(filter))
+            {
+                TyperBusiness = new ObservableCollection<TypeBusiness>
+                    (typeBusiness
+                    .OrderBy(t => t.Type)
+                    .ToList());
+            }
+            else
+            {
+                TyperBusiness = new ObservableCollection<TypeBusiness>
+                    (typeBusiness
+                    .Where(b => b.Type.ToLower()
+                    .Contains(Filter.ToLower()))
+                    .ToList());
+            }
+
+            IsRefreshing = false;
+        }
+
         public ICommand RefreshCommand { get { return new RelayCommand(Refresh); } }
         private void Refresh()
         {

@@ -8,9 +8,7 @@
         BindingContext="{Binding Business}"
         Padding="5">
         <SearchBar
-            Placeholder="Search....."
-            HeightRequest="40"
-            
+            Placeholder="Search....."                      
             Text="{Binding Filter, Mode=TwoWay}"                
             SearchCommand="{Binding SearchCommand}">
         </SearchBar>
@@ -28,40 +26,28 @@
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <StackLayout>
                                 <Image
                                     Grid.Column="0"
                                     Source="{Binding FullImage, Mode=TwoWay}"
-                                    HeightRequest="100"
-                                    WidthRequest="100">
+                                    HeightRequest="80"
+                                    WidthRequest="80">
                                 </Image>
                                 <Label
                                     Grid.Column="1"
                                     Text="{Binding Name, Mode=TwoWay}"
-                                    FontSize="Large"
                                     FontAttributes="None"
                                     TextColor="Black">
                                 </Label>
                                 <Label
                                     Grid.Column="2"
-                                    Text="{Binding Email, Mode=TwoWay}"
-                                    FontSize="Medium"
-                                    FontAttributes="Italic"
-                                    TextColor="Black">
-                                </Label>
-                                <Label
-                                    Grid.Column="3"
                                     Text="{Binding Address, Mode=TwoWay}"
-                                    FontSize="Small"
                                     FontAttributes="Italic"
                                     TextColor="Black">
                                 </Label>
                                 <StackLayout.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding OneBusinessCommand}"/>
                                 </StackLayout.GestureRecognizers>
-                            </StackLayout>
                         </Grid>
                     </ViewCell>
                 </DataTemplate>

@@ -32,7 +32,7 @@ namespace BusinessProyect.ViewModel
                 if (filter != value)
                 {
                     filter = value;
-                    LoadBusiness(business);
+                    Search();
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Filter)));
                 }
             }
@@ -118,7 +118,22 @@ namespace BusinessProyect.ViewModel
 
         private void Search()
         {
-            LoadBusiness(business.Where(b => b.Name.ToLower() == Filter.ToLower()).ToList());
+            IsRefreshing = true;
+            if (string.IsNullOrEmpty(Filter))
+            {
+                BusinessItemSource = new ObservableCollection<Business>
+                    (business
+                    .OrderBy(b => b.Name)
+                    .ToList());
+            }
+            else
+            {
+                BusinessItemSource = new ObservableCollection<Business>
+                    (business
+                    .Where(b => b.Name.ToLower()
+                    .Contains(Filter)).ToList());
+            }
+            IsRefreshing = false;
         }
 
         public ICommand RefreshCommand { get { return new RelayCommand(Refresh); } }
