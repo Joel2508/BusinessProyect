@@ -3,6 +3,7 @@ using System.Windows.Input;
 using System;
 using BusinessProyect.ViewModel;
 using BusinessProyect.Service;
+using Xamarin.Forms;
 
 namespace BusinessProyect.Models
 {
@@ -24,13 +25,14 @@ namespace BusinessProyect.Models
         }
 
         public string FullImage
-        {            
+        {
             get
             {
                 if (string.IsNullOrEmpty(Image))
                 {
                     return "business.png";
                 }
+
                 return string.Format("http://www.xtudiaconstructor.somee.com{0}", Image.Substring(1));
             }
         }
@@ -41,7 +43,7 @@ namespace BusinessProyect.Models
 
         private async void OneBusiness()
         {
-            MainViewModel.GetInstance().OneBusinessMap = new OneBusinessMapViewModel();
+            MainViewModel.GetInstance().OneBusinessMap = new OneBusinessMapViewModel(BusinessId);
             await navigationService.Navigation("OneBusinessMapPage");
         }
     }

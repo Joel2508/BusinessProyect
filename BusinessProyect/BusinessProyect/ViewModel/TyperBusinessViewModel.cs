@@ -10,6 +10,7 @@
     using System;
     using Plugin.Connectivity;
     using System.Linq;
+    using Xamarin.Forms;
 
     public class TyperBusinessViewModel : INotifyPropertyChanged
     {
@@ -107,7 +108,7 @@
             }
 
 
-            var mainViewModel = MainViewModel.GetInstance();           
+            var mainViewModel = MainViewModel.GetInstance();
             var response = await apiService.GetList<TypeBusiness>
                 ("http://www.xtudiaconstructor.somee.com", 
                 "/api", "/TypeBusinesses",

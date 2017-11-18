@@ -8,5 +8,11 @@ namespace BusinessProyect.ViewModel
 {
     public class OneBusinessMapViewModel
     {
+        private int businessId;
+
+        public OneBusinessMapViewModel(int businessId)
+        {
+            this.businessId = businessId;
+        }
     }
 }

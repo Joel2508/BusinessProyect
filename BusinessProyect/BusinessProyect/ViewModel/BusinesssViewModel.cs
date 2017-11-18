@@ -54,7 +54,6 @@ namespace BusinessProyect.ViewModel
         }
         #endregion
 
-
         #region Event
         public event PropertyChangedEventHandler PropertyChanged;
         #endregion
