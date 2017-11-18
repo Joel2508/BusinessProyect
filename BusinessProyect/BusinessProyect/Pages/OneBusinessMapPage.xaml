@@ -11,7 +11,7 @@
             <maps:Map 
                 x:Name="MyMap"
                 IsShowingUser="true"
-                MapType="Hybrid">
+                MapType="Street">
             </maps:Map>
         </StackLayout>
     </ContentPage.Content>
