@@ -82,6 +82,7 @@
                 <Label
                     FontSize="Medium"
                     Text="Forgot you password?"
+                    IsEnabled="{Binding IsEnabled}"
                     TextColor="DarkBlue">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer
@@ -111,6 +112,7 @@
                 TextColor="BlueViolet"
                 BackgroundColor="{StaticResource AccentColor1}"
                 Command="{Binding RegisterNewUserCommand}"
+                IsEnabled="{Binding IsEnabled}"
                 BorderRadius="23"
                 HeightRequest="50"
                 WidthRequest="40"

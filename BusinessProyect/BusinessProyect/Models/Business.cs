@@ -43,7 +43,7 @@ namespace BusinessProyect.Models
 
         private async void OneBusiness()
         {
-            MainViewModel.GetInstance().OneBusinessMap = new OneBusinessMapViewModel(BusinessId);
+            MainViewModel.GetInstance().OneBusinessMap = new OneBusinessMapViewModel();
             await navigationService.Navigation("OneBusinessMapPage");
         }
     }

@@ -14,7 +14,7 @@ using Domain.Model;
 
 namespace API.Controllers
 {
-    [Authorize]
+    [Authorize]    
     public class BusinessesController : ApiController
     {
         private ContextDomain db = new ContextDomain();
@@ -29,7 +29,7 @@ namespace API.Controllers
         [ResponseType(typeof(Business))]
         public async Task<IHttpActionResult> GetBusiness(int id)
         {
-            Business business = await db.Businesses.FindAsync(id);
+            var business = await db.Businesses.FindAsync(id);
             if (business == null)
             {
                 return NotFound();

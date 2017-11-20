@@ -92,6 +92,7 @@ namespace BusinessProyect.ViewModel
             LoadBusiness(business);
         }
 
+
         private void LoadBusiness(List<Business> business)
         {
             IsRefreshing = true;

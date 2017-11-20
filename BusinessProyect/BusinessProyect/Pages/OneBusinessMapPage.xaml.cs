@@ -1,4 +1,5 @@
 ﻿using BusinessProyect.Service;
+using BusinessProyect.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,15 +17,15 @@ namespace BusinessProyect.Pages
     {
         private GeolocatorService geolocatorService;
 
-
         public OneBusinessMapPage()
         {
             InitializeComponent();
             geolocatorService = new GeolocatorService();
             MoveMapToCurrentPosition();
         }
+
         #region Methods
-        async void MoveMapToCurrentPosition()
+        private async void MoveMapToCurrentPosition()
         {
             await geolocatorService.GetLocation();
             if (geolocatorService.Latitude != 0 ||
@@ -36,9 +37,17 @@ namespace BusinessProyect.Pages
                 MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(
                     position,
                     Distance.FromKilometers(.5)));
+
             }
-        }
-        #endregion
+            var oneBusinessViewModel = OneBusinessMapViewModel.GetOneBusiness();
+            await oneBusinessViewModel.LoadPins();
+            foreach (var pin in oneBusinessViewModel.Pins)
+            {
+                MyMap.Pins.Add(pin);
+            }
+
+        }   
+       #endregion
 
     }
 }
