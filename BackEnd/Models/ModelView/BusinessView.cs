@@ -9,9 +9,8 @@
     public class BusinessView : Business
     {
         public HttpPostedFileBase ImageView { get; set; }
-        [Display(Name ="Latitud")]
-        public string LatitudView { get; set; }
-        [Display(Name = "Longitud")]
-        public string LogintudView { get; set; }
+        public float LatitudedView { get; set; }
+
+        public float LongitudView { get; set; }
     }
 }

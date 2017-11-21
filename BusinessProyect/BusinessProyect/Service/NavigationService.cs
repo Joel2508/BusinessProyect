@@ -23,8 +23,16 @@ namespace BusinessProyect.Service
                 case "OneBusinessMapPage":
                     await Application.Current.MainPage.Navigation.PushAsync(new OneBusinessMapPage());
                     break;
+                case "RegisterNewUserView":
+                    App.Current.MainPage = new RegisterNewUserView();
+                    break;
 
             }
+        }
+
+        public void Back()
+        {
+            App.Current.MainPage = new LoginPage();
         }
     }
 }

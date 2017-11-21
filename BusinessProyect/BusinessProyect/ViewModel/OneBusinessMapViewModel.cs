@@ -12,6 +12,7 @@ namespace BusinessProyect.ViewModel
     {
 
         #region Attribute
+        private int businessId;
         #endregion
 
         #region Service
@@ -25,12 +26,12 @@ namespace BusinessProyect.ViewModel
         #endregion
 
 
-        public OneBusinessMapViewModel()
+        public OneBusinessMapViewModel(int businessId)
         {
             instance = this;
+            this.businessId = businessId;
             apiService = new ApiService();
             dialogService = new DialogService();
-            business = new List<Business>();
             LoadPins();
         }
 
@@ -51,7 +52,7 @@ namespace BusinessProyect.ViewModel
 
 
             var mainViewModel = MainViewModel.GetInstance();
-            var controller = string.Format("/Businesses");
+            var controller = string.Format("/Businesses/{0}", businessId);
             var response = await apiService.GetBusinessMap<Business>
                 ("http://www.xtudiaconstructor.somee.com",
                 "/api", controller,
@@ -64,8 +65,15 @@ namespace BusinessProyect.ViewModel
                 return;
             }
 
-            Pins = new ObservableCollection<Pin>();
             business = (List<Business>)response.Result;
+            ResponsBusiness(business);
+            Pins = new ObservableCollection<Pin>();
+
+        }
+
+        private void ResponsBusiness(List<Business> business)
+        {
+            Pins.Clear();
             foreach (var busines in business)
             {
                 Pins.Add(new Pin
@@ -73,13 +81,13 @@ namespace BusinessProyect.ViewModel
                     Address = busines.Address,
                     Label = busines.Name,
                     Position = new Position(
-                    Convert.ToDouble(busines.Latituded),
-                    Convert.ToDouble(busines.Longitud)),
+                    busines.Latituded,
+                    busines.Longitud),
                     Type = PinType.Place,
                 });
-            }
-        }
 
-      
+            }
+
+        }
     }
 }

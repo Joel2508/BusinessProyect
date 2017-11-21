@@ -83,12 +83,13 @@ namespace BackEnd.Controllers
                 Address = view.Address,
                 BusinessId = view.BusinessId,
                 Email = view.Email,
-                Image = view.Image,
-                Latituded =Convert.ToDouble(view.LatitudView),
-                Longitud = Convert.ToDouble(view.LogintudView),
+                Image = view.Image,     
+                Latituded = (double) (view.LatitudedView),
+                Longitud = (double) (view.LongitudView),
                 Name = view.Name,
                 TypeBusiness = view.TypeBusiness,
                 TypeBusinessId = view.TypeBusinessId,
+               
             };
             
         }
@@ -118,11 +119,11 @@ namespace BackEnd.Controllers
                 BusinessId = business.BusinessId,
                 Email = business.Email,
                 Image = business.Image,
-                LatitudView = Convert.ToString(business.Latituded),
-                LogintudView = Convert.ToString(business.Longitud),
                 Name = business.Name,
                 TypeBusiness = business.TypeBusiness,
                 TypeBusinessId = business.TypeBusinessId,
+                LatitudedView =  (float) (business.Latituded),
+                LongitudView = (float) (business.Longitud),
             };
         }
 

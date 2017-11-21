@@ -73,6 +73,7 @@
                     Text="Rememberme">
                 </Label>
                 <Switch                    
+                    IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
                     IsToggled="{Binding IsToggled, Mode=TwoWay}">
                 </Switch>
             </StackLayout>
@@ -82,7 +83,7 @@
                 <Label
                     FontSize="Medium"
                     Text="Forgot you password?"
-                    IsEnabled="{Binding IsEnabled}"
+                    IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
                     TextColor="DarkBlue">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer
@@ -103,7 +104,7 @@
                 Margin="50, 0"
                 Text="Accept"
                 TextColor="BlueViolet"
-                IsEnabled="{Binding IsEnabled}"
+                IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
                 WidthRequest="40">
             </Button>
             <Button
@@ -112,7 +113,7 @@
                 TextColor="BlueViolet"
                 BackgroundColor="{StaticResource AccentColor1}"
                 Command="{Binding RegisterNewUserCommand}"
-                IsEnabled="{Binding IsEnabled}"
+                IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
                 BorderRadius="23"
                 HeightRequest="50"
                 WidthRequest="40"

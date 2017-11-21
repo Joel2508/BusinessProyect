@@ -32,7 +32,7 @@
         public double Latituded { get; set; }
 
         public double Longitud { get; set; }
-
+    
         [JsonIgnore]
         public virtual TypeBusiness TypeBusiness { get; set; }            
     }

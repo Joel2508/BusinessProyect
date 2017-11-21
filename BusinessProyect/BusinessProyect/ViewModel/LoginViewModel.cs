@@ -168,7 +168,7 @@ namespace BusinessProyect.ViewModel
             var response = await apiService.GetToken("http://www.xtudiaconstructor.somee.com",
                 Email, Password);
 
-            if (response==null)
+            if (response == null)
             {
                 IsEnabled = true;
                 IsRunning = false;
@@ -178,7 +178,7 @@ namespace BusinessProyect.ViewModel
                 return;
             }
 
-    
+
             if (string.IsNullOrEmpty(response.AccessToken))
             {
                 IsEnabled = true;
@@ -200,8 +200,15 @@ namespace BusinessProyect.ViewModel
             IsRunning = false;
             IsEnabled = true;
 
-            
+
         }
 
+        public ICommand RegisterNewUserCommand { get { return new RelayCommand(Register); } }
+
+        private async void Register()
+        {
+            MainViewModel.GetInstance().RegisterNewUser = new RegisterNewUserViewModel();
+            await navigationService.Navigation("RegisterNewUserView");
+        }
     }
 }

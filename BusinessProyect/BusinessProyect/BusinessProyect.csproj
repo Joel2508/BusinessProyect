@@ -61,6 +61,9 @@
     <Compile Include="Pages\OneBusinessMapPage.xaml.cs">
       <DependentUpon>OneBusinessMapPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\RegisterNewUserView.xaml.cs">
+      <DependentUpon>RegisterNewUserView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\TyperBusinessPage.xaml.cs">
       <DependentUpon>TyperBusinessPage.xaml</DependentUpon>
     </Compile>
@@ -73,6 +76,7 @@
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\OneBusinessMapViewModel.cs" />
+    <Compile Include="ViewModel\RegisterNewUserViewModel.cs" />
     <Compile Include="ViewModel\TyperBusinessViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -166,6 +170,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Pages\OneBusinessMapPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\RegisterNewUserView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

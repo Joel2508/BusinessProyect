@@ -30,7 +30,7 @@ namespace BackEnd.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TypeBusiness typeBusiness = await db.TypeBusinesses.FindAsync(id);
+            var typeBusiness = await db.TypeBusinesses.FindAsync(id);
             if (typeBusiness == null)
             {
                 return HttpNotFound();

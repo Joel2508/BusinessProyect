@@ -16,6 +16,7 @@ namespace BusinessProyect.ViewModel
         public BusinesssViewModel Business { get; set; }
         public LoginViewModel Login { get; set; }
         public OneBusinessMapViewModel OneBusinessMap { get; set; }
+        public RegisterNewUserViewModel RegisterNewUser { get; set; }
         #endregion
 
         #region Constructor

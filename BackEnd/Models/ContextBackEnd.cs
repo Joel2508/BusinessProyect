@@ -10,6 +10,6 @@ namespace BackEnd.Models
 {
     public class ContextBackEnd : ContextDomain
     {
-       
+
     }
 }
