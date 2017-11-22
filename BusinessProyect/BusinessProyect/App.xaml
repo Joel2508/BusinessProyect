@@ -12,7 +12,7 @@
             <Color x:Key="MainColor">#FFFFFF</Color>
             <Color x:Key="FontColor">#9CA64F</Color>
             <Color x:Key="AccentColor1">#3E1B3C</Color>
-            <x:String x:Key="URLApi">http://www.xtudiaconstructor.somee.com</x:String>
+            <x:String x:Key="URLApi">http://businesssearch.somee.com</x:String>
         </ResourceDictionary>
 
     </Application.Resources>

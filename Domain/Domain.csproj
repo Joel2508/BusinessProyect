@@ -52,11 +52,11 @@
   <ItemGroup>
     <Compile Include="Context\ContextDomain.cs" />
     <Compile Include="Model\Business.cs" />
+    <Compile Include="Model\Customer.cs" />
     <Compile Include="Model\TypeBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

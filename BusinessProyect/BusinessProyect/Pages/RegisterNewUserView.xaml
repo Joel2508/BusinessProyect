@@ -23,6 +23,40 @@
                     </Grid.ColumnDefinitions>
                     <Label
                         Grid.Column="0"
+                        Text="First Name:"
+                        TextColor="Black">
+                    </Label>
+                    <Entry
+                        Grid.Column="1"
+                        HorizontalOptions="FillAndExpand"
+                        Placeholder="Enter your first name"                        
+                        Text="{Binding FirstName, Mode=TwoWay}">
+                    </Entry>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label
+                        Grid.Column="0"
+                        Text="Last Name:"
+                        TextColor="Black">
+                    </Label>
+                    <Entry
+                        Grid.Column="1"
+                        HorizontalOptions="FillAndExpand"
+                        Placeholder="Enter your last name"                        
+                        Text="{Binding LastName, Mode=TwoWay}">
+                    </Entry>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label
+                        Grid.Column="0"
                         Text="Email:"
                         TextColor="Black">
                     </Label>
@@ -84,17 +118,6 @@
                     Text="Salve"
                     BorderRadius="23"
                     Command="{Binding SalveCommand}">
-                </Button>
-                <Button          
-                    HeightRequest="50"
-                    WidthRequest="50"
-                    IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
-                    VerticalOptions="End"
-                    TextColor="White"          
-                    BackgroundColor="Black"
-                    Text="Cancel"
-                    BorderRadius="23"
-                    Command="{Binding CancelCommand}">
                 </Button>
             </StackLayout>
         </StackLayout>

@@ -164,8 +164,7 @@ namespace BusinessProyect.ViewModel
                 await dialogService.ShowsMessage("Error", "Internet connection failed, consult your network service operator.");
                 return;
             }
-
-            var response = await apiService.GetToken("http://www.xtudiaconstructor.somee.com",
+            var response = await apiService.GetToken("http://businesssearch.somee.com",
                 Email, Password);
 
             if (response == null)

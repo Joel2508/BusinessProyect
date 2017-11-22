@@ -34,7 +34,7 @@ namespace BusinessProyect.Models
                     return "business.png";
                 }
 
-                return string.Format("http://www.xtudiaconstructor.somee.com{0}", Image.Substring(1));
+                return string.Format("http://businesssearch.somee.com{0}", Image.Substring(1));
             }
         }
 

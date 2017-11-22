@@ -144,6 +144,47 @@ namespace BusinessProyect.Service
             }
         }
 
+        public async Task<Responses> PostRegister<T>(string urlBase, string servicePrefix, 
+            string controller, T model)
+        {
+            try
+            {
+                var request = JsonConvert.SerializeObject(model);
+                var content = new StringContent(request, Encoding.UTF8, "application/json");
+                var client = new HttpClient();
+                client.BaseAddress = new Uri(urlBase);
+                var url = string.Format("{0}{1}", servicePrefix, controller);
+                var response = await client.PostAsync(url, content);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    return new Responses
+                    {
+                        IsSuccess = false,
+                        Message = response.StatusCode.ToString(),
+                    };
+                }
+
+                var result = await response.Content.ReadAsStringAsync();
+                var newRecord = JsonConvert.DeserializeObject<T>(result);
+
+                return new Responses
+                {
+                    IsSuccess = true,
+                    Message = "OK",
+                    Result = newRecord,
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Responses
+                {
+                    IsSuccess = false,
+                    Message = ex.Message,
+                };
+            }
+        }
+
         private string ToMessage(string message)
         {            
             message = "The connection internet failure, please the your operator the service";

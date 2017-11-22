@@ -54,7 +54,7 @@ namespace BusinessProyect.ViewModel
             var mainViewModel = MainViewModel.GetInstance();
             var controller = string.Format("/Businesses/{0}", businessId);
             var response = await apiService.GetBusinessMap<Business>
-                ("http://www.xtudiaconstructor.somee.com",
+                ("http://businesssearch.somee.com",
                 "/api", controller,
                 mainViewModel.Token.AccessToken,
                 mainViewModel.Token.TokenType);

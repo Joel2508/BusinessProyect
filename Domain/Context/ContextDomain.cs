@@ -13,6 +13,7 @@ namespace Domain.Context
         public DbSet<TypeBusiness> TypeBusinesses { get; set; }
 
         public DbSet<Business> Businesses { get; set; }
+        public DbSet<Customer> Customers { get; set; }
 
     }
 }

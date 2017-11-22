@@ -110,7 +110,7 @@
 
             var mainViewModel = MainViewModel.GetInstance();
             var response = await apiService.GetList<TypeBusiness>
-                ("http://www.xtudiaconstructor.somee.com", 
+                ("http://businesssearch.somee.com", 
                 "/api", "/TypeBusinesses",
                 mainViewModel.Token.AccessToken, 
                 mainViewModel.Token.TokenType);

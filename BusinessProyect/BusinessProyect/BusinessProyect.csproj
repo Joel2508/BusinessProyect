@@ -38,8 +38,10 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="helper\RegexUtilities.cs" />
     <Compile Include="Infrastructure\IntanceLocator.cs" />
     <Compile Include="Models\Business.cs" />
+    <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Responses.cs" />
     <Compile Include="Models\TokenResponse.cs" />
     <Compile Include="Models\TypeBusiness.cs" />

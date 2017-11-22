@@ -1,4 +1,5 @@
-﻿using BusinessProyect.Service;
+﻿using BusinessProyect.Models;
+using BusinessProyect.Service;
 using GalaSoft.MvvmLight.Command;
 using Plugin.Connectivity;
 using System;
@@ -32,53 +33,32 @@ namespace BusinessProyect.ViewModel
         #endregion
 
         #region Properties
+        public string FirstName
+        {
+            get;
+            set;
+        }
+        public string LastName
+        {
+            get;
+            set;
+        }
         public string Email
         {
-            get
-            {
-                return email;
-            }
-
-            set
-            {
-                if(email != value)
-                {
-                    email = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Email)));
-                }
-            }
+            get;
+            set;
         }
 
         public string Password
         {
-            get
-            {
-                return password;
-            }
-            set
-            {
-                if(password != value)
-                {
-                    password = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Password)));
-                }
-            }
+            get;
+            set;
         }
 
         public string ConfirmPassword
         {
-            get
-            {
-                return confirPassword;
-            }
-            set
-            {
-                if (ConfirmPassword != value)
-                {
-                    confirPassword = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ConfirmPassword)));
-                }
-            }
+            get;
+            set;
         }
 
         public bool IsRunning
@@ -128,7 +108,16 @@ namespace BusinessProyect.ViewModel
 
         private async void Salve()
         {
-
+            if (string.IsNullOrEmpty(FirstName))
+            {
+                await dialogService.ShowsMessage("Error", "Enter must your first name.");
+                return;
+            }
+            if (string.IsNullOrEmpty(LastName))
+            {
+                await dialogService.ShowsMessage("Error", "Enter must your last name.");
+                return;
+            }
             if (string.IsNullOrEmpty(Email))
             {
                 await dialogService.ShowsMessage("Error", "Enter must your email.");
@@ -146,16 +135,19 @@ namespace BusinessProyect.ViewModel
                 await dialogService.ShowsMessage("Error", "Enter an password for your register.");
                 return;
             }
-            if(Password.Length < 6)
+            if (Password.Length < 6)
             {
                 await dialogService.ShowsMessage("Error", "The hiring must be greater than 6.");
                 return;
             }
-            if (Password != ConfirmPassword)
+            if (!Password.Equals(ConfirmPassword))
             {
                 await dialogService.ShowsMessage("Error", "The password and confirm the password not equas.");
                 return;
             }
+
+            IsRunning = true;
+            IsEnabled = false;
 
             if (!CrossConnectivity.Current.IsConnected)
             {
@@ -164,14 +156,56 @@ namespace BusinessProyect.ViewModel
                 await dialogService.ShowsMessage("Error", "Not connection the internet");
                 return;
             }
-        }
 
-        public ICommand CancelCommand { get { return new RelayCommand(Cancel); } }
 
-        private void Cancel()
-        {
-            navigationService.Back();
-        }
+
+            var customer = new Customer
+            {
+                FirstName = FirstName,
+                LastName = LastName,
+                Email = Email,
+                Password = Password,
+            };
+            var response = await apiService.PostRegister(
+                 "http://businesssearch.somee.com",
+                "/api", "/Customers", customer);
+
+            if (!response.IsSuccess)
+            {
+                IsRunning = false;
+                IsEnabled = true;
+                await dialogService.ShowsMessage("Error", response.Message);
+                return;
+            }
+
+            var responseToken = await apiService.GetToken(
+                "http://businesssearch.somee.com", Email, Password);
+            if (responseToken == null)
+            {
+                IsRunning = false;
+                IsEnabled = true;
+                await dialogService.ShowsMessage("Error", "The service is not available, please try latter.");
+                Password = null;
+                return;
+            }
+            if (string.IsNullOrEmpty(responseToken.AccessToken))
+            {
+                IsRunning = false;
+                IsEnabled = true;
+                await dialogService.ShowsMessage("Error", responseToken.ErrorDescription);
+                Password = null;
+                return;
+            }
+
+            var mainViewModel = MainViewModel.GetInstance();
+            mainViewModel.Token = responseToken;
+            mainViewModel.TyperBusines = new TyperBusinessViewModel();
+            await navigationService.Back();
+            await navigationService.Navigation("TyperBusinessPage");
+
+            IsRunning = false;
+            IsEnabled = true;
+        }      
         #endregion
     }
 }
